@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تولد دوباره - جهان باز معنوی</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e94560;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #533483;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: #e94560;
+            margin: 15px 0;
+        }
+        
+        .btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #533483;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #533483;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #533483;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .world-view {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 200px;
+            border: 2px solid #533483;
+        }
+        
+        .first-person-view {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="400" height="300" fill="%2316213e"/><circle cx="200" cy="150" r="80" fill="%23533483" opacity="0.3"/></svg>');
+            background-size: cover;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .location-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #533483, #e94560);
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .prayer-option, .action-option {
+            background: rgba(83, 52, 131, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .prayer-option:hover, .action-option:hover {
+            background: rgba(233, 69, 96, 0.7);
+            transform: scale(1.05);
+        }
+        
+        .event-log {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            background: rgba(83, 52, 131, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            margin: 5px 10px;
+        }
+        
+        .question {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 4px solid #e94560;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option {
+            background: rgba(83, 52, 131, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background: rgba(233, 69, 96, 0.5);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: #e94560;
+            transition: width 0.3s ease;
+        }
+        
+        .map-view {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .map-location {
+            background: rgba(83, 52, 131, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .map-location:hover {
+            background: rgba(233, 69, 96, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        .map-location.current {
+            background: rgba(233, 69, 96, 0.7);
+            border: 2px solid #fff;
+        }
+    </style>
+ <link type="text/css" rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <div class="container">
+        <!-- صفحه ورود و ثبت نام -->
+        <div id="loginScreen" class="screen active">
+            <h1>تولد دوباره</h1>
+            <div id="loginForm">
+                <h2>ورود به جهان</h2>
+                <input type="text" id="username" placeholder="نام روح">
+                <input type="password" id="password" placeholder="رمز عبور">
+                <button class="btn" onclick="login()">ورود</button>
+                <button class="btn" onclick="showRegister()">ثبت نام جدید</button>
+            </div>
+            <div id="registerForm" style="display: none;">
+                <h2>ثبت نام روح جدید</h2>
+                <input type="text" id="newUsername" placeholder="نام روح جدید">
+                <input type="password" id="newPassword" placeholder="رمز عبور">
+                <textarea id="soulDescription" placeholder="توصیف روح خود... (اختیاری)"></textarea>
+                <button class="btn" onclick="register()">ادامه به آزمون روانشناسی</button>
+                <button class="btn btn-secondary" onclick="showLogin()">بازگشت</button>
+            </div>
+        </div>
+
+        <!-- صفحه آزمون روانشناسی -->
+        <div id="psychologyTestScreen" class="screen">
+            <h1>آزمون روانشناسی تولد</h1>
+            <p>پاسخ به ۱۰ سوال زیر به ما کمک می‌کند تا تو را در سرزمین مناسب متولد کنیم...</p>
+            
+            <div class="progress-bar">
+                <div class="progress" id="testProgress" style="width: 0%"></div>
+            </div>
+            
+            <div id="testQuestions">
+                <!-- سوالات اینجا dynamically لود می‌شوند -->
+            </div>
+            
+            <button class="btn" id="nextQuestionBtn" onclick="nextQuestion()" style="display: none;">سوال بعدی</button>
+            <button class="btn" id="submitTestBtn" onclick="submitTest()" style="display: none;">تکمیل آزمون و تولد</button>
+        </div>
+
+        <!-- صفحه اصلی بازی -->
+        <div id="gameScreen" class="screen">
+            <h1>جهان تو - دید اول شخص</h1>
+            
+            <div class="stats">
+                <div class="stat-item">سلامت: <span id="health">100</span></div>
+                <div class="stat-item">معنویت: <span id="spirituality">50</span></div>
+                <div class="stat-item">تقدیر: <span id="destiny">25</span></div>
+                <div class="stat-item">اعتماد: <span id="faith">30</span></div>
+                <div class="stat-item">انرژی: <span id="energy">80</span></div>
+            </div>
+            
+            <div class="first-person-view">
+                <h2 id="locationName">منطقه ناشناخته</h2>
+                <div class="location-image" id="locationImage">
+                    <!-- تصویر منطقه -->
+                </div>
+                <p id="locationDescription">...</p>
+                <p id="currentEvent">...</p>
+                <div id="npcInteraction" style="margin-top: 15px;"></div>
+            </div>
+            
+            <h2>نقشه جهان</h2>
+            <div class="map-view" id="worldMap">
+                <!-- مناطق جهان اینجا نمایش داده می‌شوند -->
+            </div>
+            
+            <h2>دعاهای تو</h2>
+            <div class="choices">
+                <div class="prayer-option" onclick="makePrayer('health')">دعای سلامتی</div>
+                <div class="prayer-option" onclick="makePrayer('wisdom')">دعای خرد</div>
+                <div class="prayer-option" onclick="makePrayer('protection')">دعای محافظت</div>
+                <div class="prayer-option" onclick="makePrayer('guidance')">دعای راهنمایی</div>
+            </div>
+            
+            <h2>اقدامات ممکن</h2>
+            <div class="choices">
+                <div class="action-option" onclick="explore()">کاوش منطقه</div>
+                <div class="action-option" onclick="meditate()">مراقبه</div>
+                <div class="action-option" onclick="helpOthers()">کمک به دیگران</div>
+                <div class="action-option" onclick="craft()">ساخت وسایل</div>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="btn" onclick="showTravelScreen()">سفر به منطقه دیگر</button>
+            </div>
+            
+            <div class="event-log" id="eventLog">
+                <p>روح تو متولد شد...</p>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="logout()" style="margin-top: 20px;">خروج از بازی</button>
+        </div>
+
+        <!-- صفحه سفر -->
+        <div id="travelScreen" class="screen">
+            <h1>سفر به سرزمین دیگر</h1>
+            <p>مقصد سفر خود را انتخاب کنید:</p>
+            <div id="travelLocations">
+                <!-- مناطق قابل سفر اینجا نمایش داده می‌شوند -->
+            </div>
+            <button class="btn btn-secondary" onclick="showGameScreen()">بازگشت</button>
+        </div>
+    </div>
+
+    <script>
+        // پایگاه داده ساده کاربران
+        let users = JSON.parse(localStorage.getItem('reborn_users')) || {};
+        let currentUser = null;
+        let currentTestAnswers = [];
+        let currentQuestionIndex = 0;
+
+        // سوالات آزمون روانشناسی
+        const psychologyTest = [
+            {
+                question: "در اوقات فراغت خود چه کاری را ترجیح می‌دهید؟",
+                options: [
+                    { text: "خواندن کتاب و مطالعه", type: "wisdom" },
+                    { text: "ملاقات با دوستان و اجتماعی بودن", type: "social" },
+                    { text: "پیاده‌روی در طبیعت", type: "nature" },
+                    { text: "خلاقیت و ساختن چیزی", type: "creation" }
+                ]
+            },
+            {
+                question: "وقتی با چالش بزرگی روبرو می‌شوید، چه می‌کنید؟",
+                options: [
+                    { text: "تحلیل منطقی و برنامه‌ریزی", type: "wisdom" },
+                    { text: "از دیگران کمک می‌گیرم", type: "social" },
+                    { text: "به درون خود رجوع می‌کنم", type: "spiritual" },
+                    { text: "مستقیم اقدام می‌کنم", type: "action" }
+                ]
+            },
+            {
+                question: "چه محیطی شما را بیشتر آرام می‌کند؟",
+                options: [
+                    { text: "کتابخانه یا فضای مطالعه", type: "wisdom" },
+                    { text: "جشن‌ها و جمع‌های دوستانه", type: "social" },
+                    { text: "کوهستان یا جنگل", type: "nature" },
+                    { text: "کارگاه یا فضای خلاق", type: "creation" }
+                ]
+            },
+            {
+                question: "بزرگترین آرزوی شما چیست؟",
+                options: [
+                    { text: "دستیابی به دانش بی‌پایان", type: "wisdom" },
+                    { text: "داشتن روابط عمیق و معنادار", type: "social" },
+                    { text: "رسیدن به آرامش درونی", type: "spiritual" },
+                    { text: "خلق چیزی ماندگار", type: "creation" }
+                ]
+            },
+            {
+                question: "در یک موقعیت جدید، اولین کاری که می‌کنید چیست؟",
+                options: [
+                    { text: "مشاهده و تحلیل محیط", type: "wisdom" },
+                    { text: "با مردم ارتباط برقرار می‌کنم", type: "social" },
+                    { text: "حضور در لحظه را تجربه می‌کنم", type: "spiritual" },
+                    { text: "دست به کار می‌شوم", type: "action" }
+                ]
+            },
+            {
+                question: "چه چیزی به زندگی شما معنا می‌دهد؟",
+                options: [
+                    { text: "کشف حقایق جهان", type: "wisdom" },
+                    { text: "عشق و دوستی", type: "social" },
+                    { text: "ارتباط با چیزی برتر", type: "spiritual" },
+                    { text: "ساختن و آفرینش", type: "creation" }
+                ]
+            },
+            {
+                question: "در مواجهه با اختلاف نظر، چه واکنشی نشان می‌دهید؟",
+                options: [
+                    { text: "بحث منطقی و استدلال", type: "wisdom" },
+                    { text: "جستجوی زمینه مشترک", type: "social" },
+                    { text: "درون‌نگری و تأمل", type: "spiritual" },
+                    { text: "حفظ استقلال رأی", type: "action" }
+                ]
+            },
+            {
+                question: "تعطیلات ایده‌آل شما چگونه است؟",
+                options: [
+                    { text: "بازدید از موزه‌ها و مکان‌های تاریخی", type: "wisdom" },
+                    { text: "مسافرت با گروهی از دوستان", type: "social" },
+                    { text: "اقامت در مکانی دورافتاده و آرام", type: "nature" },
+                    { text: "شرکت در کارگاه‌های خلاق", type: "creation" }
+                ]
+            },
+            {
+                question: "چه نوع داستان‌هایی شما را بیشتر جذب می‌کند؟",
+                options: [
+                    { text: "داستان‌های معمایی و فکری", type: "wisdom" },
+                    { text: "داستان‌های درباره روابط انسانی", type: "social" },
+                    { text: "داستان‌های معنوی و فلسفی", type: "spiritual" },
+                    { text: "داستان‌های ماجراجویانه", type: "action" }
+                ]
+            },
+            {
+                question: "به عنوان یک قدرت فوق‌العاده، کدام را انتخاب می‌کنید؟",
+                options: [
+                    { text: "خواندن ذهن دیگران", type: "wisdom" },
+                    { text: "درمان کردن دیگران", type: "social" },
+                    { text: "ارتباط با طبیعت", type: "nature" },
+                    { text: "توانایی خلق هر چیزی", type: "creation" }
+                ]
+            }
+        ];
+
+        // مناطق مختلف جهان
+        const locations = [
+            {
+                id: "village",
+                name: "روستای آرام",
+                description: "تو در روستایی کوچک در کنار رودخانه متولد شده‌ای. مردم اینجا ساده و مهربان هستند و به زمین و آسمان ایمان دارند. خانه‌های گلی، باغ‌های سرسبز و صدای جریان آب آرامش بخش است.",
+                image: "روستای آرام",
+                color: "#4CAF50",
+                requiredTypes: ["nature", "social"],
+                events: [
+                    "ساکنین روستا در حال آماده شدن برای جشنی باستانی هستند",
+                    "کودکی بیمار نیاز به درمان دارد",
+                    "باران شدیدی در راه است",
+                    "مسافری مرموز به روستا آمده است"
+                ],
+                npcs: ["کشاورز پیر", "کودک کنجکاو", "پیرزن خردمند"]
+            },
+            {
+                id: "city",
+                name: "شهر بزرگ",
+                description: "تو در شهری پرجنب‌وجوش متولد شده‌ای. ساختمان‌های بلند، بازارهای شلوغ و آدم‌های مختلف با داستان‌های گوناگون. اینجا هم فرصت هست هم خطر.",
+                image: "شهر بزرگ", 
+                color: "#2196F3",
+                requiredTypes: ["social", "action"],
+                events: [
+                    "بازاری شلوغ با کالاهای عجیب",
+                    "مردم نگران بیماری مسری هستند", 
+                    "جشنواره هنری در میدان اصلی",
+                    "درگیری بین دو گروه مختلف"
+                ],
+                npcs: ["بازرگان ثروتمند", "گداى خیابان", "هنرمند مشهور"]
+            },
+            {
+                id: "mountain",
+                name: "کوهستان مقدس",
+                description: "تو در ارتفاعات کوهستان مقدس متولد شده‌ای. قله‌های برفی، معابد باستانی و هوای پاک. اینجا زمین به آسمان نزدیک است و رازهای زیادی در دل خود دارد.",
+                image: "کوهستان مقدس",
+                color: "#795548",
+                requiredTypes: ["spiritual", "nature"],
+                events: [
+                    "راهبی پیر در حال مراقبه دیده شد",
+                    "نوری عجیب از قله کوه دیده می‌شود",
+                    "مسافری گم‌شده نیاز به کمک دارد",
+                    "هوای طوفانی در راه است"
+                ],
+                npcs: ["راهب عابد", "کوهنورد ماجراجو", "نگهبان معبد"]
+            },
+            {
+                id: "desert",
+                name: "صحرای بی‌کران", 
+                description: "تو در میان شن‌های طلایی صحرا متولد شده‌ای. گرمای خورشید، شب‌های سرد و ستارگان درخشان. اینجا تنها صدای باد شنیده می‌شود و رازهای کهن در زیر شن‌ها پنهان است.",
+                image: "صحرای بی‌کران",
+                color: "#FF9800",
+                requiredTypes: ["spiritual", "wisdom"],
+                events: [
+                    "کاروان مسافران در حال عبور هستند",
+                    "آب چشمه در حال خشک شدن است",
+                    "شهر افسانه‌ای در دوردست دیده می‌شود", 
+                    "طوفان شن در راه است"
+                ],
+                npcs: ["بدوی صحرا", "کاوشگر فرتوت", "تاجر کاروان"]
+            },
+            {
+                id: "island",
+                name: "جزیره اسرارآمیز",
+                description: "تو در جزیره‌ای سبز و مرموز متولد شده‌ای. جنگل‌های انبوه، سواحل شنی و اقیانوس بی‌کران. اینجا پر از رازهای ناگفته و موجودات عجیب است.",
+                image: "جزیره اسرارآمیز",
+                color: "#009688",
+                requiredTypes: ["creation", "action"],
+                events: [
+                    "ساکنین بومی در حال اجرای مراسمی هستند",
+                    "گنجینه‌ای افسانه‌ای کشف شده",
+                    "آتشفشان در حال فعال شدن است",
+                    "کشتی غریبی به ساحل نزدیک می‌شود"
+                ],
+                npcs: ["ریش سفید قبیله", "ماهیگیر محلی", "محقق اسرارآمیز"]
+            },
+            {
+                id: "library",
+                name: "کتابخانه باستانی",
+                description: "تو در کتابخانه‌ای عظیم و باستانی متولد شده‌ای. قفسه‌های بی‌پایان پر از کتاب‌های نادر، سالن‌های مطالعه ساکت و دانشی که در انتظار کشف شدن است.",
+                image: "کتابخانه باستانی",
+                color: "#607D8B",
+                requiredTypes: ["wisdom", "creation"],
+                events: [
+                    "متنی باستانی نیاز به ترجمه دارد",
+                    "رازی قدیمی در حال فاش شدن است",
+                    "محققی مرموز به کمک نیاز دارد",
+                    "بخشی از کتابخانه بسته شده است"
+                ],
+                npcs: "کتابدار سالخورده", "دانشجوی مشتاق", "محقق مرموز"]
+            }
+        ];
+
+        // معجزات احتمالی
+        const miracles = {
+            health: [
+                "نوری الهی بدن تو را دربرگرفته و سلامتت بازگشته است",
+                "آب چشمه مقدس بیماری تو را شفا داده است", 
+                "فرشته‌ای در خواب بر تو ظاهر شده و تو بهبود یافته‌ای"
+            ],
+            wisdom: [
+                "حقیقتی بزرگ ناگهان بر تو آشکار شده است",
+                "کتاب باستانی حاوی دانش عمیق به دستت رسیده",
+                "راهی پیر رازهایی از جهان برایت فاش کرده است"
+            ],
+            protection: [
+                "نوری سپید تو را از خطر محافظت کرده است",
+                "همه دشمنان تو ناگهان راه خود را تغییر داده‌اند",
+                "توفانی بزرگ همه تهدیدها را از بین برده است"
+            ],
+            guidance: [
+                "ستاره‌ای در آسمان مسیر درست را به تو نشان داده است",
+                "صدایی از آسمان راهنماییت کرده",
+                "رؤیایی روشن مسیر آینده را برایت آشکار کرده"
+            ]
+        };
+
+        // توابع ثبت نام و ورود
+        function showRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        function register() {
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const soulDesc = document.getElementById('soulDescription').value;
+            
+            if (!username || !password) {
+                alert('نام و رمز عبور را وارد کنید');
+                return;
+            }
+            
+            if (users[username]) {
+                alert('این نام روح قبلاً انتخاب شده است');
+                return;
+            }
+            
+            // ذخیره اطلاعات اولیه
+            users[username] = {
+                password: password,
+                soulDescription: soulDesc,
+                stats: {
+                    health: 100,
+                    spirituality: 50,
+                    destiny: 25,
+                    faith: 30,
+                    energy: 80
+                },
+                testAnswers: [],
+                location: null,
+                events: [],
+                prayers: [],
+                discoveredLocations: [],
+                inventory: []
+            };
+            
+            localStorage.setItem('reborn_users', JSON.stringify(users));
+            currentUser = username;
+            startPsychologyTest();
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!users[username] || users[username].password !== password) {
+                alert('نام روح یا رمز عبور نادرست است');
+                return;
+            }
+            
+            currentUser = username;
+            startGame();
+        }
+
+        // توابع آزمون روانشناسی
+        function startPsychologyTest() {
+            document.getElementById('loginScreen').classList.remove('active');
+            document.getElementById('psychologyTestScreen').classList.add('active');
+            currentTestAnswers = [];
+            currentQuestionIndex = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const questionContainer = document.getElementById('testQuestions');
+            const progressBar = document.getElementById('testProgress');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const submitBtn = document.getElementById('submitTestBtn');
+            
+            // به روزرسانی نوار پیشرفت
+            const progress = ((currentQuestionIndex) / psychologyTest.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            if (currentQuestionIndex >= psychologyTest.length) {
+                submitTest();
+                return;
+            }
+            
+            const currentQ = psychologyTest[currentQuestionIndex];
+            let questionHTML = `
+                <div class="question">
+                    <h3>سوال ${currentQuestionIndex + 1} از ${psychologyTest.length}</h3>
+                    <p>${currentQ.question}</p>
+                    <div class="options">
+            `;
+            
+            currentQ.options.forEach((option, index) => {
+                questionHTML += `
+                    <div class="option" onclick="selectAnswer(${index})">
+                        ${option.text}
+                    </div>
+                `;
+            });
+            
+            questionHTML += `</div></div>`;
+            questionContainer.innerHTML = questionHTML;
+            
+            // نمایش دکمه مناسب
+            if (currentQuestionIndex === psychologyTest.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function selectAnswer(optionIndex) {
+            const currentQ = psychologyTest[currentQuestionIndex];
+            currentTestAnswers.push(currentQ.options[optionIndex].type);
+            
+            // Highlight selected option
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.background = 'rgba(83, 52, 131, 0.3)');
+            options[optionIndex].style.background = 'rgba(233, 69, 96, 0.7)';
+        }
+
+        function nextQuestion() {
+            if (currentTestAnswers.length <= currentQuestionIndex) {
+                alert('لطفاً به این سوال پاسخ دهید');
+                return;
+            }
+            
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function submitTest() {
+            if (currentTestAnswers.length < psychologyTest.length) {
+                alert('لطفاً به همه سوالات پاسخ دهید');
+                return;
+            }
+            
+            // تحلیل نتایج آزمون
+            const typeCounts = {};
+            currentTestAnswers.forEach(type => {
+                typeCounts[type] = (typeCounts[type] || 0) + 1;
+            });
+            
+            // یافتن مناسب‌ترین منطقه
+            let bestLocation = null;
+            let bestScore = -1;
+            
+            locations.forEach(location => {
+                let score = 0;
+                location.requiredTypes.forEach(type => {
+                    score += (typeCounts[type] || 0);
+                });
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestLocation = location;
+                }
+            });
+            
+            // ذخیره نتایج و شروع بازی
+            users[currentUser].testAnswers = currentTestAnswers;
+            users[currentUser].location = bestLocation;
+            users[currentUser].discoveredLocations = [bestLocation.id];
+            
+            localStorage.setItem('reborn_users', JSON.stringify(users));
+            startGame();
+        }
+
+        // توابع اصلی بازی
+        function startGame() {
+            document.getElementById('psychologyTestScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.add('active');
+            
+            const user = users[currentUser];
+            updateDisplay();
+            updateWorldMap();
+            
+            // اضافه کردن رویداد اول
+            addEvent(`در ${user.location.name} متولد شدی. ${user.location.description}`);
+            addEvent(`تست روانشناسی نشان داد تو روحی ${getPersonalityType(user.testAnswers)} هستی.`);
+        }
+
+        function getPersonalityType(answers) {
+            const counts = {};
+            answers.forEach(type => {
+                counts[type] = (counts[type] || 0) + 1;
+            });
+            
+            const maxType = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            
+            const typeNames = {
+                'wisdom': 'خردگرا',
+                'social': 'اجتماعی',
+                'nature': 'طبیعت‌گرا', 
+                'spiritual': 'معنوی',
+                'action': 'کنش‌گرا',
+                'creation': 'آفرینش‌گرا'
+            };
+            
+            return typeNames[maxType] || 'مرموز';
+        }
+
+        function updateDisplay() {
+            const user = users[currentUser];
+            const stats = user.stats;
+            const location = user.location;
+            
+            // به روزرسانی آمار
+            document.getElementById('health').textContent = stats.health;
+            document.getElementById('spirituality').textContent = stats.spirituality;
+            document.getElementById('destiny').textContent = stats.destiny;
+            document.getElementById('faith').textContent = stats.faith;
+            document.getElementById('energy').textContent = stats.energy;
+            
+            // به روزرسانی نمای اول شخص
+            document.getElementById('locationName').textContent = location.name;
+            document.getElementById('locationDescription').textContent = location.description;
+            document.getElementById('locationImage').textContent = location.image;
+            document.getElementById('locationImage').style.background = `linear-gradient(45deg, ${location.color}, #e94560)`;
+            
+            // نمایش NPCهای تصادفی
+            const npcContainer = document.getElementById('npcInteraction');
+            if (Math.random() > 0.5) {
+                const randomNpc = location.npcs[Math.floor(Math.random() * location.npcs.length)];
+                npcContainer.innerHTML = `<p>📢 <strong>${randomNpc}</strong> در اینجا هست و به کمک نیاز دارد...</p>`;
+            } else {
+                npcContainer.innerHTML = '';
+            }
+            
+            // ذخیره تغییرات
+            localStorage.setItem('reborn_users', JSON.stringify(users));
+        }
+
+        function updateWorldMap() {
+            const user = users[currentUser];
+            const mapContainer = document.getElementById('worldMap');
+            let mapHTML = '';
+            
+            locations.forEach(location => {
+                const isDiscovered = user.discoveredLocations.includes(location.id);
+                const isCurrent = user.location.id === location.id;
+                
+                mapHTML += `
+                    <div class="map-location ${isCurrent ? 'current' : ''} ${!isDiscovered ? 'undiscovered' : ''}" 
+                         onclick="${isDiscovered ? `travelTo('${location.id}')` : ''}">
+                        ${isDiscovered ? location.name : 'منطقه ناشناخته'}
+                        ${isCurrent ? ' ⭐' : ''}
+                    </div>
+                `;
+            });
+            
+            mapContainer.innerHTML = mapHTML;
+        }
+
+        function travelTo(locationId) {
+            const user = users[currentUser];
+            const newLocation = locations.find(loc => loc.id === locationId);
+            
+            if (!newLocation) return;
+            
+            // هزینه سفر
+            user.stats.energy -= 20;
+            user.stats.health -= 5;
+            
+            if (user.stats.energy <= 0) {
+                addEvent('انرژی تو برای سفر کافی نیست!');
+                user.stats.energy = 10;
+                updateDisplay();
+                return;
+            }
+            
+            user.location = newLocation;
+            
+            // افزودن به مناطق کشف شده
+            if (!user.discoveredLocations.includes(locationId)) {
+                user.discoveredLocations.push(locationId);
+                addEvent(`منطقه جدید کشف شد: ${newLocation.name}`);
+            }
+            
+            addEvent(`به ${newLocation.name} سفر کردی. ${newLocation.description}`);
+            updateDisplay();
+            updateWorldMap();
+        }
+
+        function showTravelScreen() {
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('travelScreen').classList.add('active');
+            
+            const travelContainer = document.getElementById('travelLocations');
+            const user = users[currentUser];
+            let travelHTML = '';
+            
+            locations.forEach(location => {
+                if (user.discoveredLocations.includes(location.id) && location.id !== user.location.id) {
+                    travelHTML += `
+                        <div class="map-location" onclick="travelTo('${location.id}')">
+                            <h3>${location.name}</h3>
+                            <p>${location.description.substring(0, 100)}...</p>
+                            <small>هزینه: ۲۰ انرژی</small>
+                        </div>
+                    `;
+                }
+            });
+            
+            travelContainer.innerHTML = travelHTML || '<p>هنوز منطقه دیگری کشف نکرده‌ای!</p>';
+        }
+
+        function showGameScreen() {
+            document.getElementById('travelScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.add('active');
+        }
+
+        function addEvent(eventText) {
+            const user = users[currentUser];
+            user.events.push(eventText);
+            
+            const eventLog = document.getElementById('eventLog');
+            const newEvent = document.createElement('p');
+            newEvent.textContent = `› ${eventText}`;
+            eventLog.appendChild(newEvent);
+            eventLog.scrollTop = eventLog.scrollHeight;
+            
+            // محدود کردن تعداد رویدادهای نمایش داده شده
+            while (eventLog.children.length > 10) {
+                eventLog.removeChild(eventLog.firstChild);
+            }
+        }
+
+        // توابع اقدامات بازی
+        function makePrayer(type) {
+            const user = users[currentUser];
+            
+            // کاهش انرژی
+            user.stats.energy -= 10;
+            if (user.stats.energy <= 0) {
+                addEvent('انرژی تو برای دعا کردن کافی نیست!');
+                user.stats.energy = 0;
+                updateDisplay();
+                return;
+            }
+            
+            // افزایش ایمان
+            user.stats.faith += 5;
+            
+            // شانس معجزه (بر اساس ایمان)
+            const miracleChance = user.stats.faith / 100;
+            
+            if (Math.random() < miracleChance) {
+                // معجزه رخ داده!
+                const miracleList = miracles[type];
+                const miracle = miracleList[Math.floor(Math.random() * miracleList.length)];
+                
+                addEvent(`✨ دعای تو مستجاب شد! ${miracle}`);
+                
+                // اثرات معجزه
+                switch(type) {
+                    case 'health':
+                        user.stats.health = Math.min(100, user.stats.health + 30);
+                        break;
+                    case 'wisdom':
+                        user.stats.spirituality += 20;
+                        user.stats.destiny += 10;
+                        break;
+                    case 'protection':
+                        user.stats.health += 10;
+                        user.stats.faith += 15;
+                        break;
+                    case 'guidance':
+                        user.stats.destiny += 20;
+                        user.stats.spirituality += 10;
+                        break;
+                }
+            } else {
+                addEvent('🙏 دعای تو به آسمان رفت... شاید پاسخی در راه باشد');
+            }
+            
+            user.prayers.push(type);
+            updateDisplay();
+        }
+
+        function explore() {
+            const user = users[currentUser];
+            user.stats.energy -= 15;
+            
+            if (user.stats.energy <= 0) {
+                addEvent('خیلی خسته‌ای برای کاوش!');
+                user.stats.energy = 0;
+                updateDisplay();
+                return;
+            }
+            
+            const randomEvent = user.location.events[Math.floor(Math.random() * user.location.events.length)];
+            addEvent(`🔍 در حال کاوش: ${randomEvent}`);
+            
+            // شانس کشف منطقه جدید
+            if (Math.random() < 0.3) {
+                const undiscovered = locations.filter(loc => !user.discoveredLocations.includes(loc.id));
+                if (undiscovered.length > 0) {
+                    const newLoc = undiscovered[Math.floor(Math.random() * undiscovered.length)];
+                    user.discoveredLocations.push(newLoc.id);
+                    addEvent(`🗺️ مسیری به سمت ${newLoc.name} پیدا کردی!`);
+                    updateWorldMap();
+                }
+            }
+            
+            user.stats.destiny += 5;
+            updateDisplay();
+        }
+
+        function meditate() {
+            const user = users[currentUser];
+            
+            user.stats.spirituality += 15;
+            user.stats.faith += 10;
+            user.stats.energy = Math.min(100, user.stats.energy + 20);
+            user.stats.health -= 5;
+            
+            addEvent('☁️ در سکوت مراقبه کردی و به حقیقت نزدیک‌تر شدی...');
+            updateDisplay();
+        }
+
+        function helpOthers() {
+            const user = users[currentUser];
+            
+            user.stats.destiny += 15;
+            user.stats.energy -= 10;
+            user.stats.health -= 8;
+            
+            addEvent('❤️ به دیگران کمک کردی و تقدیر تو تغییر کرد...');
+            updateDisplay();
+        }
+
+        function craft() {
+            const user = users[currentUser];
+            user.stats.energy -= 20;
+            
+            if (user.stats.energy <= 0) {
+                addEvent('نمی‌توانی در این حالت چیزی بسازی!');
+                user.stats.energy = 0;
+                updateDisplay();
+                return;
+            }
+            
+            const items = ['طلسم محافظ', 'معجون سلامتی', 'نقشه راهنما', 'کتاب خرد'];
+            const craftedItem = items[Math.floor(Math.random() * items.length)];
+            
+            user.inventory.push(craftedItem);
+            user.stats.spirituality += 10;
+            
+            addEvent(`🔨 ${craftedItem} را ساختی!`);
+            updateDisplay();
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('loginScreen').classList.add('active');
+        }
+
+        // بازیابی انرژی به مرور زمان
+        setInterval(() => {
+            if (currentUser && users[currentUser]) {
+                users[currentUser].stats.energy = Math.min(100, users[currentUser].stats.energy + 1);
+                updateDisplay();
+            }
+        }, 30000); // هر 30 ثانیه 1 انرژی
+    </script>
+<script type="text/javascript" src="js/script.js"></script>
+<!-- این فایل توسط ادیتور آنلاین وبسایت آموزشی فری لرن ایجاد شده است -->
+<!-- https://Free-Learn.Ir/ -->
+</body>
+</html>
